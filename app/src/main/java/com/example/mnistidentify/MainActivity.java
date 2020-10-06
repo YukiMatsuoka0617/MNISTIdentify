@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Bitmap bitmap = null;
     Module module = null;
 
+    Bitmap drawBitmap;
+    Canvas drawCanvas;
+
     private ArrayList<Integer> classnames = new ArrayList<Integer>();
 
     @Override
@@ -57,9 +63,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for(int i = 0; i < 10;i++){
             classnames.add(i);
         }
-
-        Log.e("PytorchHelloWorld", String.valueOf(iv.getWidth())+ ","+String.valueOf(iv.getHeight()));
-
     }
 
     void findView(){
@@ -125,8 +128,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.identifyButton:
-                bitmap = PaintView.drawBitmap;
-                bitmap = Bitmap.createScaledBitmap(bitmap,28,28,true);
+                drawBitmap = Bitmap.createBitmap(paintView.getWidth(),paintView.getHeight(), Bitmap.Config.ARGB_8888);
+                drawCanvas = new Canvas(drawBitmap);
+                drawCanvas.drawRGB(0,0,0);
+                for (Path path : PaintView.pathList) {
+                    drawCanvas.drawPath(path, PaintView.paint);
+                }
+                bitmap = Bitmap.createScaledBitmap(drawBitmap,28,28,true);
                 iv.setImageBitmap(bitmap);
 
                 recognition(bitmap);

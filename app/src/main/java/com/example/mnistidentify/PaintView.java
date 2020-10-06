@@ -13,12 +13,12 @@ import java.util.ArrayList;
 
 public class PaintView extends View {
 
-    private Paint paint;
+    static Paint paint;
     private Path path;
-    private ArrayList<Path> pathList = new ArrayList<Path>();
+    static ArrayList<Path> pathList = new ArrayList<Path>();
 
-    public static Bitmap drawBitmap;
-    Canvas drawCanvas;
+//    public static Bitmap drawBitmap;
+//    Canvas drawCanvas;
 
     public PaintView(Context context) {
         super(context);
@@ -27,8 +27,8 @@ public class PaintView extends View {
     public PaintView(Context context, AttributeSet attrs) { //AttributeSetでAttributeにsetできるようにする
         super(context, attrs);
 
-        drawBitmap = Bitmap.createBitmap(1050, 1050, Bitmap.Config.ARGB_8888);
-        drawCanvas = new Canvas(drawBitmap);
+//        drawBitmap = Bitmap.createBitmap(788,788, Bitmap.Config.ARGB_8888);
+//        drawCanvas = new Canvas(drawBitmap);
 
         //画面に線を書くためのPaintとPathを用意する
         paint = new Paint();
@@ -38,7 +38,7 @@ public class PaintView extends View {
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND); //線のつなぎ目を丸く
         paint.setStrokeCap(Paint.Cap.ROUND); //線の端面を丸く
-        paint.setStrokeWidth(60);
+        paint.setStrokeWidth(50);
     }
 
     //線描画メソッド
@@ -46,11 +46,11 @@ public class PaintView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawRGB(0,0,0);
-        drawCanvas.drawRGB(0,0,0);
+//        drawCanvas.drawRGB(0,0,0);
 
         for (Path path : pathList) {
             canvas.drawPath(path, paint);
-            drawCanvas.drawPath(path, paint);
+//            drawCanvas.drawPath(path, paint);
         }
     }
 
